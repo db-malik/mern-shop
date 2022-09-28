@@ -1,20 +1,28 @@
 import { Container } from 'react-bootstrap'
-// import Card from './components/product/card/Card'
+import { BrowserRouter, Routes, Route } from 'react-router-dom' // import Card from './components/product/card/Card'
 import Footer from './containers/footer/Footer'
 import Header from './containers/header/Header'
-import Home from './pages/home/Home'
+import HomePage from './pages/home/HomePage'
+import ProductPage from './pages/product/ProductPage'
+import CartPage from './pages/cart/CartPage'
+import SignInPage from './pages/signIn/SignInPage'
+
 const App = () => {
   return (
-    <>
+    <BrowserRouter>
       <Header />
       <main className="py-4">
         <Container>
-          <Home />
-          {/* <Card /> */}
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/card" element={<CartPage />} />
+            <Route path="/signIn" element={<SignInPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+          </Routes>
         </Container>
       </main>
       <Footer />
-    </>
+    </BrowserRouter>
   )
 }
 
