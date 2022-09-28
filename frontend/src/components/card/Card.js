@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import Rating from '../rating/Rating'
 
 const Container = styled.a`
-  height: 400px;
+  height: 300px;
   width: 200px;
   display: flex;
   flex-direction: column;
@@ -29,22 +30,20 @@ const CardImage = styled.img`
 const CardTitle = styled.h2`
   font-size: 0.8em;
 `
-const CardBody = styled.p`
-  font-size: 0.6em;
-`
+
 const CardPrice = styled.span`
   font-style: 0.8em;
   font-weight: bold;
   color: black;
 `
 
-const Card = (props) => {
+const Card = ({ product }) => {
   return (
-    <Container href={`/product/${props.cardId}`}>
-      <CardImage src={props.cardImage} />
-      <CardTitle>{props.cardTitle}</CardTitle>
-      <CardBody>{props.cardBody}</CardBody>
-      <CardPrice>{props.cardPrice}</CardPrice>
+    <Container href={`/product/${product._id}`}>
+      <CardImage src={product.image} />
+      <CardTitle>{product.name}</CardTitle>
+      <Rating rating={product.rating} review={product.numReviews} />
+      <CardPrice>{product.price} €</CardPrice>
     </Container>
   )
 }
