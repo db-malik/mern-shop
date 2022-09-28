@@ -20,15 +20,7 @@ const ProductsContainer = styled.div`
 
 const ProductsList = () => {
   const productsList = products.map((product) => (
-    <Card
-      key={product._id}
-      title={product.name}
-      cardId={product._id}
-      cardImage={product.image}
-      cardTitle={product.name}
-      cardBody={product.description}
-      cardPrice={product.price}
-    ></Card>
+    <Card key={product._id} product={product} />
   ))
 
   return (
