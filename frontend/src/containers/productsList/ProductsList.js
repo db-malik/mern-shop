@@ -22,9 +22,13 @@ const ProductsContainer = styled.div`
 const ProductsList = () => {
   const [products, setProducts] = useState([])
   useEffect(() => {
-    axios.get('/api/products').then((res) => {
-      setProducts(res.data)
-    })
+    // FETCH ALL PRODUCTS FROM BACKEND SERVER
+    const fetchProducts = () => {
+      axios.get('/api/products').then((res) => {
+        setProducts(res.data)
+      })
+    }
+    fetchProducts()
   }, [])
 
   const productsList = products.map((product) => (
