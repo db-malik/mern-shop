@@ -61,9 +61,13 @@ const ProductPage = () => {
   let { id } = useParams()
   const [product, setProduct] = useState([])
   useEffect(() => {
-    axios.get('/api/products/' + id).then((res) => {
-      setProduct(res.data)
-    })
+    // FETCH  PRODUCT BY ID FROM BACKEND SERVER
+    const fetchProduct = () => {
+      axios.get('/api/products/' + id).then((res) => {
+        setProduct(res.data)
+      })
+    }
+    fetchProduct()
   }, [id])
 
   return (
@@ -75,7 +79,6 @@ const ProductPage = () => {
         <ImageContainer>
           <Image src={product.image} />
         </ImageContainer>
-
         <ProductDetails>
           <ProdName>{product.name}</ProdName>
           <ProdRating>
