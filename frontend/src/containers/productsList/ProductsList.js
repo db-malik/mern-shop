@@ -1,11 +1,41 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
-// import products from '../../products'
-// import Product from '../../components/product/Product'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { listProductsAction } from '../../actions/productActions'
+
 import Card from '../../components/card/Card'
+import Loader from '../../components/loader/Loader'
+import Message from '../../components/message/Message'
+
 import styled from 'styled-components'
 import { mobile } from '../../Responsive'
 
+const ProductsList = () => {
+  const dispatch = useDispatch()
+  const productList = useSelector((state) => state.productList)
+  const { loading, error, products } = productList
+  useEffect(() => {
+    dispatch(listProductsAction())
+  }, [dispatch])
+
+  return (
+    <Container>
+      <h1> Latest Products</h1>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <ProductsContainer>
+          {products.map((product) => (
+            <Card key={product._id} product={product} />
+          ))}
+        </ProductsContainer>
+      )}
+    </Container>
+  )
+}
+
+// ----------------styling begins here ----------------
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,29 +48,5 @@ const ProductsContainer = styled.div`
   flex-wrap: wrap;
   ${mobile({ justifyContent: 'center' })}
 `
-
-const ProductsList = () => {
-  const [products, setProducts] = useState([])
-  useEffect(() => {
-    // FETCH ALL PRODUCTS FROM BACKEND SERVER
-    const fetchProducts = () => {
-      axios.get('/api/products').then((res) => {
-        setProducts(res.data)
-      })
-    }
-    fetchProducts()
-  }, [])
-
-  const productsList = products.map((product) => (
-    <Card key={product._id} product={product} />
-  ))
-
-  return (
-    <Container>
-      <h1> Latest Products</h1>
-      <ProductsContainer>{productsList}</ProductsContainer>
-    </Container>
-  )
-}
-
+// -----------------style end here---------------
 export default ProductsList
