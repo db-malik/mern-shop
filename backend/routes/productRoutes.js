@@ -4,7 +4,9 @@ const router = express.Router()
 
 import Product from '../models/productModel.js'
 
-// Get all products
+// @desc Fetch all products
+// @route Get  /api/products
+// @access public
 router.get(
   '/',
   asyncHandler(async (req, res) => {
@@ -14,12 +16,19 @@ router.get(
   })
 )
 
-// get product by id
+// @desc Fetch single product by id
+// @route Get  /api/products/:id
+// @access public
 router.get(
   '/:id',
   asyncHandler(async (req, res) => {
-    const product = products.find((p) => p._id === req.params.id)
-    res.json(product)
+    const product = await Product.findById(req.params.id)
+
+    if (product) {
+      res.json(product)
+    } else {
+      res.status(404).json({ message: 'Product not found' })
+    }
   })
 )
 
