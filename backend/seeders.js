@@ -34,3 +34,17 @@ const importData = async () => {
     process.exit(1)
   }
 }
+
+const destroyData = async () => {
+  try {
+    await Orders.deleteMany()
+    await Products.deleteMany()
+    await Users.deleteMany()
+
+    console.log('Data destroyed successfully'.green.underline)
+    process.exit()
+  } catch (error) {
+    console.log(`Error ${error.message}`.red.underline)
+    process.exit(1)
+  }
+}
