@@ -1,7 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+
 import Rating from '../../components/rating/Rating'
+import Message from '../../components/message/Message'
+import Loader from '../../components/loader/Loader'
 
 import styled from 'styled-components'
 import { Button } from 'react-bootstrap'
@@ -9,6 +13,8 @@ import { Button } from 'react-bootstrap'
 import { productDetailsAction } from '../../actions/productActions'
 
 const ProductPage = () => {
+  const [qty, setQty] = useState(0)
+  const [cartQty, setCartQty] = useState(1)
   let { id } = useParams()
   const dispatch = useDispatch()
   const productDetails = useSelector((state) => state.productDetails)
@@ -18,37 +24,77 @@ const ProductPage = () => {
     dispatch(productDetailsAction(id))
   }, [dispatch, id])
 
+  const cartQtyHandler = (operator) => {
+    let newCartQty
+    newCartQty = operator === 'i' ? cartQty + 1 : cartQty - 1
+    setCartQty(newCartQty)
+  }
+
   return (
     <Container>
-      <Button variant="secondary" size="sm">
-        GO BACK
-      </Button>
-      <Product>
-        <ImageContainer>
-          <Image src={product.image} />
-        </ImageContainer>
-        <ProductDetails>
-          <ProdName>{product.name}</ProdName>
-          <ProdRating>
-            <Rating rating={product.rating} review={product.numReviews} />
-          </ProdRating>
-          <ProdPrice>Price :€ {product.price}</ProdPrice>
+      <Link to="/">
+        <Button variant="secondary" size="sm">
+          GO BACK
+        </Button>
+      </Link>
 
-          <ProdDesc>{product.description}</ProdDesc>
-          <CartItem>In Stock</CartItem>
-          <CartQuantity>
-            <span>Quantity:</span>
-            <Quantity type="number" name="quantity" min="1" max="5" required />
-          </CartQuantity>
-          <Button variant="primary" size="sm">
-            ADD TO CART
-          </Button>
-        </ProductDetails>
-      </Product>
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <Message variant="danger">{error}</Message>
+      ) : (
+        <Product>
+          <ImageContainer>
+            <Image src={product.image} />
+          </ImageContainer>
+          <ProductDetails>
+            <ProdName>{product.name}</ProdName>
+            <ProdRating>
+              <Rating rating={product.rating} review={product.numReviews} />
+            </ProdRating>
+            <ProdPrice>Price :€ {product.price}</ProdPrice>
+
+            <ProdDesc>{product.description}</ProdDesc>
+            <ProdStock countInStock={product.countInStock}>
+              {product.countInStock > 0 ? ' In Stock' : 'out of stock'}{' '}
+            </ProdStock>
+            {product.countInStock > 0 && (
+              <CartQuantity>
+                <Quantity>Quantity:</Quantity>
+                <Button
+                  disabled={cartQty === 1}
+                  variant="outline-dark"
+                  style={{ padding: '4px' }}
+                  onClick={() => cartQtyHandler('d')}
+                >
+                  -
+                </Button>{' '}
+                <span>{cartQty}</span>
+                <Button
+                  variant="outline-dark"
+                  style={{ padding: '4px' }}
+                  onClick={() => cartQtyHandler('i')}
+                  disabled={cartQty === 10 || cartQty === product.countInStock}
+                >
+                  +
+                </Button>{' '}
+              </CartQuantity>
+            )}
+            <Button
+              disabled={product.countInStock === 0}
+              variant="primary"
+              size="sm"
+              style={{ margin: '8px 0' }}
+            >
+              ADD TO CART
+            </Button>
+          </ProductDetails>
+        </Product>
+      )}
     </Container>
   )
 }
-
+//------------------styling begins here ---------------------
 const Container = styled.div``
 const Product = styled.div`
   display: flex;
@@ -89,15 +135,21 @@ const ProdDesc = styled.li`
 
 const CartQuantity = styled.li`
   display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 1rem 0;
+  gap: 10px;
+  align-items: center;
+  border-bottom: 1px solid lightgray;
+  border-top: 1px solid lightgray;
 `
-const Quantity = styled.input`
-  width: 40px;
+const Quantity = styled.span`
+  font-weight: bold;
 `
-
-const CartItem = styled.ul`
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
+const ProdStock = styled.div`
+  color: ${(props) => (props.countInStock ? ' green' : 'red')};
+  padding: 10px 0;
 `
+//------------------styling ends here ---------------------
 
 export default ProductPage
