@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Rating from '../../components/rating/Rating'
@@ -13,9 +13,10 @@ import { Button } from 'react-bootstrap'
 import { productDetailsAction } from '../../actions/productActions'
 
 const ProductPage = () => {
-  const [qty, setQty] = useState(0)
   const [cartQty, setCartQty] = useState(1)
   let { id } = useParams()
+  const navigate = useNavigate()
+
   const dispatch = useDispatch()
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
@@ -24,12 +25,19 @@ const ProductPage = () => {
     dispatch(productDetailsAction(id))
   }, [dispatch, id])
 
+  //---------event handler begins --------
+
   const cartQtyHandler = (operator) => {
     let newCartQty
     newCartQty = operator === 'i' ? cartQty + 1 : cartQty - 1
     setCartQty(newCartQty)
   }
 
+  const addToCartHandler = () => {
+    navigate(`/cart/${id}?qty=${cartQty}`)
+  }
+
+  //--------------event handler ends ------------
   return (
     <Container>
       <Link to="/">
@@ -85,6 +93,7 @@ const ProductPage = () => {
               variant="primary"
               size="sm"
               style={{ margin: '8px 0' }}
+              onClick={addToCartHandler}
             >
               ADD TO CART
             </Button>
