@@ -1,10 +1,53 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 import Rating from '../../components/rating/Rating'
 
 import styled from 'styled-components'
 import { Button } from 'react-bootstrap'
+
+import { productDetailsAction } from '../../actions/productActions'
+
+const ProductPage = () => {
+  let { id } = useParams()
+  const dispatch = useDispatch()
+  const productDetails = useSelector((state) => state.productDetails)
+  const { loading, error, product } = productDetails
+
+  useEffect(() => {
+    dispatch(productDetailsAction(id))
+  }, [dispatch, id])
+
+  return (
+    <Container>
+      <Button variant="secondary" size="sm">
+        GO BACK
+      </Button>
+      <Product>
+        <ImageContainer>
+          <Image src={product.image} />
+        </ImageContainer>
+        <ProductDetails>
+          <ProdName>{product.name}</ProdName>
+          <ProdRating>
+            <Rating rating={product.rating} review={product.numReviews} />
+          </ProdRating>
+          <ProdPrice>Price :€ {product.price}</ProdPrice>
+
+          <ProdDesc>{product.description}</ProdDesc>
+          <CartItem>In Stock</CartItem>
+          <CartQuantity>
+            <span>Quantity:</span>
+            <Quantity type="number" name="quantity" min="1" max="5" required />
+          </CartQuantity>
+          <Button variant="primary" size="sm">
+            ADD TO CART
+          </Button>
+        </ProductDetails>
+      </Product>
+    </Container>
+  )
+}
 
 const Container = styled.div``
 const Product = styled.div`
@@ -56,49 +99,5 @@ const CartItem = styled.ul`
   justify-content: space-between;
   list-style: none;
 `
-
-const ProductPage = () => {
-  let { id } = useParams()
-  const [product, setProduct] = useState([])
-  useEffect(() => {
-    // FETCH  PRODUCT BY ID FROM BACKEND SERVER
-    const fetchProduct = () => {
-      axios.get('/api/products/' + id).then((res) => {
-        setProduct(res.data)
-      })
-    }
-    fetchProduct()
-  }, [id])
-
-  return (
-    <Container>
-      <Button variant="secondary" size="sm">
-        GO BACK
-      </Button>
-      <Product>
-        <ImageContainer>
-          <Image src={product.image} />
-        </ImageContainer>
-        <ProductDetails>
-          <ProdName>{product.name}</ProdName>
-          <ProdRating>
-            <Rating rating={product.rating} review={product.numReviews} />
-          </ProdRating>
-          <ProdPrice>Price :€ {product.price}</ProdPrice>
-
-          <ProdDesc>{product.description}</ProdDesc>
-          <CartItem>In Stock</CartItem>
-          <CartQuantity>
-            <span>Quantity:</span>
-            <Quantity type="number" name="quantity" min="1" max="5" required />
-          </CartQuantity>
-          <Button variant="primary" size="sm">
-            ADD TO CART
-          </Button>
-        </ProductDetails>
-      </Product>
-    </Container>
-  )
-}
 
 export default ProductPage
