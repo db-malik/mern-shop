@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listProductsAction } from '../../actions/productActions'
+import { productsListAction } from '../../actions/productActions'
 
 import Card from '../../components/card/Card'
 import Loader from '../../components/loader/Loader'
@@ -13,8 +13,9 @@ const ProductsList = () => {
   const dispatch = useDispatch()
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
+
   useEffect(() => {
-    dispatch(listProductsAction())
+    dispatch(productsListAction())
   }, [dispatch])
 
   return (
