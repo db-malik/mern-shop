@@ -1,6 +1,21 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+
 import Rating from '../rating/Rating'
+import styled from 'styled-components'
+
+const Card = ({ product }) => {
+  return (
+    <Container>
+      <Link to={`/products/${product._id}`}>
+        <CardImage src={product.image} />
+        <CardTitle>{product.name}</CardTitle>
+        <Rating rating={product.rating} review={product.numReviews} />
+        <CardPrice>{product.price} €</CardPrice>
+      </Link>
+    </Container>
+  )
+}
 
 const Container = styled.a`
   height: 300px;
@@ -36,16 +51,5 @@ const CardPrice = styled.span`
   font-weight: bold;
   color: black;
 `
-
-const Card = ({ product }) => {
-  return (
-    <Container href={`/products/${product._id}`}>
-      <CardImage src={product.image} />
-      <CardTitle>{product.name}</CardTitle>
-      <Rating rating={product.rating} review={product.numReviews} />
-      <CardPrice>{product.price} €</CardPrice>
-    </Container>
-  )
-}
 
 export default Card
