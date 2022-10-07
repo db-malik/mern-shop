@@ -39,7 +39,7 @@ const CardPrice = styled.span`
 
 const Card = ({ product }) => {
   return (
-    <Container href={`/product/${product._id}`}>
+    <Container href={`/products/${product._id}`}>
       <CardImage src={product.image} />
       <CardTitle>{product.name}</CardTitle>
       <Rating rating={product.rating} review={product.numReviews} />
