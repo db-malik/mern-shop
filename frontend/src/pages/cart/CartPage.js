@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams, Link } from 'react-router-dom'
+import { useLocation, useParams, Link, useNavigate } from 'react-router-dom'
 
 import {
   Container,
@@ -14,27 +14,36 @@ import {
 } from 'react-bootstrap'
 import Message from '../../components/message/Message'
 
-import { addToCartAction } from '../../actions/cartActions'
+import {
+  loadCartFromStorageAction,
+  addToCartAction,
+  removeFromCartAction,
+} from '../../actions/cartActions'
 
 // import Message from '../../components/message/Message'
 
 const CartPage = () => {
   const location = useLocation()
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector((state) => state.cart)
-
+  const { cartItems } = cart
   const { id } = useParams()
   const qty = location.search ? Number(location.search.split('=')[1]) : 1
-  const { cartItems } = cart
 
   useEffect(() => {
     if (id) {
       dispatch(addToCartAction(id, qty))
     }
+    dispatch(loadCartFromStorageAction())
   }, [dispatch, id, qty])
 
-  const removeFromCartHandler = () => {}
-  const checkoutHandler = () => {}
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCartAction(id))
+  }
+  const checkoutHandler = () => {
+    navigate('/login?redirect=shipping')
+  }
 
   return (
     <Container>
@@ -50,36 +59,20 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <ListGroup.Item key={item.id}>
                   <Row>
-                    <Col sm={6} md={2}>
-                      <Image
-                        className="pb-4"
-                        src={item.image}
-                        alt={item.name}
-                        fluid
-                        rounded
-                      />
+                    <Col md={2}>
+                      <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
-                    <Col sm={6} md={4}>
-                      <Link
-                        style={{ fontSize: '0.8rem' }}
-                        to={`/product/${item.id}`}
-                      >
-                        {item.name}
-                      </Link>
+                    <Col md={3}>
+                      <Link to={`/product/${item.id}`}> {item.name}</Link>
                     </Col>
-                    <Col sm={3} md={2}>
-                      ${item.price}
-                    </Col>
-                    <Col sm={6} md={3}>
-                      <Form.Select
-                        style={{ fontSize: '0.8rem' }}
+                    <Col md={2}>${item.price}</Col>
+                    <Col md={2}>
+                      <Form.Control
+                        as="select"
                         value={item.qty}
                         onChange={(e) =>
                           dispatch(
-                            addToCartAction(
-                              item.product,
-                              Number(e.target.value)
-                            )
+                            addToCartAction(item.id, Number(e.target.value))
                           )
                         }
                       >
@@ -88,18 +81,15 @@ const CartPage = () => {
                             {x + 1}
                           </option>
                         ))}
-                      </Form.Select>
+                      </Form.Control>
                     </Col>
-                    <Col sm={3} md={1}>
+                    <Col md={2}>
                       <Button
                         type="button"
                         variant="light"
                         onClick={() => removeFromCartHandler(item.id)}
                       >
-                        <i
-                          style={{ color: 'red' }}
-                          className="fas fa-trash"
-                        ></i>
+                        <i className="fas fa-trash"></i>
                       </Button>
                     </Col>
                   </Row>
