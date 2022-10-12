@@ -20,8 +20,6 @@ import {
   removeFromCartAction,
 } from '../../actions/cartActions'
 
-// import Message from '../../components/message/Message'
-
 const CartPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
@@ -39,7 +37,11 @@ const CartPage = () => {
   }, [dispatch, id, qty])
 
   const removeFromCartHandler = (id) => {
-    dispatch(removeFromCartAction(id))
+    // eslint-disable-next-line no-restricted-globals
+    if (confirm('Press OK to confirm!') === true) {
+      dispatch(removeFromCartAction(id))
+    } else {
+    }
   }
   const checkoutHandler = () => {
     navigate('/login?redirect=shipping')
