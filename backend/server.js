@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { json } from 'express'
 import dotenv from 'dotenv'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 
@@ -11,6 +11,9 @@ dotenv.config()
 const app = express()
 //connection to mongo database
 connectDB()
+
+// accept json format
+app.use(express.json())
 
 app.get('/', (req, res) => {
   res.send('API is running')
