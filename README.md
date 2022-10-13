@@ -15,13 +15,16 @@ Run Locally
    Create .env file in root folder
    Set MONGODB_URI=mongodb+srv://your-db-connection
 
+
 3. Run Backend
-   $ npm install
+
+   $ npm install 
    $ npm start
 
-4. Run Frontend
 
-# open new terminal
+4. Run Frontend 
+
+# open new terminal 
 
 $ cd frontend
 $ npm install
