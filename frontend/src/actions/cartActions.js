@@ -1,20 +1,5 @@
-import {
-  CART_ADD_ITEM,
-  CART_REMOVE_ITEM,
-  LOAD_CART_ITEMS,
-} from '../constants/cartConstants'
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from '../constants/cartConstants'
 import axios from 'axios'
-
-export const loadCartFromStorageAction = () => async (dispatch) => {
-  const cartItems = await JSON.parse(localStorage.getItem('cartItems'))
-  if (cartItems == null) {
-    localStorage.setItem('cartItems', [])
-  }
-  dispatch({
-    type: LOAD_CART_ITEMS,
-    payload: cartItems,
-  })
-}
 
 export const addToCartAction = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)
