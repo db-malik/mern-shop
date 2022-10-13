@@ -41,4 +41,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser, getUserProfile }
+// @desc register new user
+// @route POST api/users/register
+// @access public
+const registerUser = asyncHandler(async (req, res) => {
+  const { email, password, name } = req.body
+  const userExist = await User.findOne({ email })
+
+  if (userExist) {
+    res.status(400).json('there is an other acount with this email')
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+  })
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id),
+    })
+  }
+})
+
+export { authUser, registerUser, getUserProfile }
