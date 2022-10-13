@@ -1,12 +1,18 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { redirect } from 'react-router-dom'
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-
+import { logoutUserAction } from '../../actions/userActions'
 const Header = () => {
   const userLogin = useSelector((state) => state.userLogin)
+  const dispatch = useDispatch()
+
   const { userInfo } = userLogin
-  const logoutHandler = () => {}
+  const logoutHandler = () => {
+    dispatch(logoutUserAction())
+    redirect('/')
+  }
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
