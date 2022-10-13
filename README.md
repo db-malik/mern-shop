@@ -1,6 +1,6 @@
 # mern-shop
 
-Run Locally
+## Run Locally
 
 1. Clone repo
    $ git clone https://github.com/db-malik/mern-shop.git
@@ -19,24 +19,24 @@ Run Locally
    $ npm install
    $ npm start
 
-4. Run Frontend
+## 4. Run Frontend
 
-# open new terminal
-
+open new terminal
+run command :
 $ cd frontend
 $ npm install
 $ npm start
 
-5. Seed Users and Products
-   $ npm run data:import
+    5. Seed Users and Products
+      $ npm run data:import
 
-5.1. delete data generated
-$ data:destroy
+    5.1. delete data generated
+        $ data:destroy
 
-6.  Login
-    Run http://localhost:3000/login
-    Enter admin email and password and click login
+    6.  Login
+         Run http://localhost:3000/login
+         Enter admin email and password and click login
 
-7.  register
-    Run http://localhost:3000/register
-    Enter admin email and password and click signin
+    7.  register
+         Run http://localhost:3000/register
+         Enter admin email and password and click signin
