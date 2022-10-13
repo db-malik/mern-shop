@@ -5,7 +5,7 @@ import Header from './containers/header/Header'
 import HomePage from './pages/home/HomePage'
 import ProductPage from './pages/product/ProductPage'
 import CartPage from './pages/cart/CartPage'
-import SignInPage from './pages/signIn/SignInPage'
+import LoginPage from './pages/login/LoginPage'
 
 const App = () => {
   return (
@@ -14,14 +14,14 @@ const App = () => {
       <main className="py-4">
         <Container>
           <Routes>
-            <Route path="/" element={<HomePage />} />
             <Route path="cart" element={<CartPage />}>
               <Route path=":id" element={<CartPage />} />
             </Route>
-            <Route path="signIn" element={<SignInPage />} />
+            <Route path="login" element={<LoginPage />} />
             <Route path="products">
               <Route path=":id" element={<ProductPage />} />
             </Route>
+            <Route path="/" element={<HomePage />} />
           </Routes>
         </Container>
       </main>
