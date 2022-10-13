@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { redirect } from 'react-router-dom'
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
+import { Container, Nav, Navbar, NavDropdown, Collapse } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { logoutUserAction } from '../../actions/userActions'
+
 const Header = () => {
+  const [open, setOpen] = useState(false)
   const userLogin = useSelector((state) => state.userLogin)
   const dispatch = useDispatch()
 
@@ -29,15 +31,26 @@ const Header = () => {
                   <i className="fa-solid fa-cart-shopping"></i> Cart
                 </Nav.Link>
               </LinkContainer>
+
               {Object.keys(userInfo).length !== 0 ? (
-                <NavDropdown title={userInfo.name} id="username">
-                  <LinkContainer to={'/profile'}>
-                    <NavDropdown.Item> Profile</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    {' '}
-                    Logout
-                  </NavDropdown.Item>
+                <NavDropdown
+                  onClick={() => setOpen(!open)}
+                  aria-controls="collapsedNav"
+                  aria-expanded={open}
+                  title={userInfo.name}
+                  id="username"
+                >
+                  <Collapse in={open}>
+                    <div id="collapsedNav">
+                      <LinkContainer to={'/profile'}>
+                        <NavDropdown.Item> Profile</NavDropdown.Item>
+                      </LinkContainer>
+                      <NavDropdown.Item onClick={logoutHandler}>
+                        {' '}
+                        Logout
+                      </NavDropdown.Item>
+                    </div>
+                  </Collapse>
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
