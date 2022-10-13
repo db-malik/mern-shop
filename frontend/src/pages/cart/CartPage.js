@@ -15,7 +15,6 @@ import {
 import Message from '../../components/message/Message'
 
 import {
-  loadCartFromStorageAction,
   addToCartAction,
   removeFromCartAction,
 } from '../../actions/cartActions'
@@ -33,7 +32,6 @@ const CartPage = () => {
     if (id) {
       dispatch(addToCartAction(id, qty))
     }
-    dispatch(loadCartFromStorageAction())
   }, [dispatch, id, qty])
 
   const removeFromCartHandler = (id) => {
