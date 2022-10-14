@@ -30,12 +30,15 @@ $ npm start
     5. Seed Users and Products
       $ npm run data:import
 
+
     5.1. delete data generated
         $ data:destroy
+
 
     6.  Login
          Run http://localhost:3000/login
          Enter admin email and password and click login
+
 
     7.  register
          Run http://localhost:3000/register
