@@ -7,7 +7,7 @@ import Loader from '../../components/loader/Loader'
 import FormContainer from '../../components/form/FormContainer'
 import { userRegisterAction } from '../../actions/userActions'
 
-const SignupPage = () => {
+const RegisterPage = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -18,8 +18,8 @@ const SignupPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { loading, error, userInfo } = userLogin
+  const userRegister = useSelector((state) => state.userRegister)
+  const { loading, error, userInfo } = userRegister
   const redirection = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
@@ -32,11 +32,8 @@ const SignupPage = () => {
     e.preventDefault()
     if (password !== confirmPassword) {
       setMessage("password didn't match")
-    }
-    if (password === confirmPassword) {
-      setMessage(null)
+    } else {
       dispatch(userRegisterAction(name, email, password))
-      navigate('/')
     }
   }
   return (
@@ -99,4 +96,4 @@ const SignupPage = () => {
   )
 }
 
-export default SignupPage
+export default RegisterPage
