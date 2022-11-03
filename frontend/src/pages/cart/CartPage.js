@@ -17,7 +17,7 @@ import Message from '../../components/message/Message'
 import {
   addToCartAction,
   removeFromCartAction,
-} from '../../actions/cartActions'
+} from '../../redux/actions/cartActions'
 
 const CartPage = () => {
   const location = useLocation()
@@ -42,7 +42,7 @@ const CartPage = () => {
     }
   }
   const checkoutHandler = () => {
-    navigate('/login?redirect=shipping')
+    navigate('/shipping')
   }
 
   return (

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { redirect } from 'react-router-dom'
-import { Container, Nav, Navbar, NavDropdown, Collapse } from 'react-bootstrap'
+
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
-import { logoutUserAction } from '../../actions/userActions'
+import { logoutUserAction } from '../../redux/actions/userActions'
 
 const Header = () => {
   const [open, setOpen] = useState(false)

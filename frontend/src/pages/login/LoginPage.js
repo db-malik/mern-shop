@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../../components/message/Message'
 import Loader from '../../components/loader/Loader'
-import { userLoginAction } from '../../actions/userActions'
+import { userLoginAction } from '../../redux/actions/userActions'
 
 import styled from 'styled-components'
 

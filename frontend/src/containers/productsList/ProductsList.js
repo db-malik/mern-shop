@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { productsListAction } from '../../actions/productActions'
+import { productsListAction } from '../../redux/actions/productActions'
 
 import Card from '../../components/card/Card'
 import Loader from '../../components/loader/Loader'

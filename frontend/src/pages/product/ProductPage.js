@@ -10,7 +10,7 @@ import Loader from '../../components/loader/Loader'
 import styled from 'styled-components'
 import { Button } from 'react-bootstrap'
 
-import { productDetailsAction } from '../../actions/productActions'
+import { productDetailsAction } from '../../redux/actions/productActions'
 
 const ProductPage = () => {
   const [cartQty, setCartQty] = useState(1)
