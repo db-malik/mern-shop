@@ -8,6 +8,7 @@ import CartPage from './pages/cart/CartPage'
 import LoginPage from './pages/login/LoginPage'
 import RegisterPage from './pages/register/RegisterPage'
 import ProfilePage from './pages/profile/ProfilePage'
+import ShippingPage from './pages/shipping/ShippingPage'
 
 const App = () => {
   return (
@@ -20,13 +21,14 @@ const App = () => {
               <Route path=":id" element={<CartPage />} />
             </Route>
 
-            <Route path="login" element={<LoginPage />} />
+            <Route path="login" element={<LoginPage />}></Route>
             <Route path="register" element={<RegisterPage />} />
             <Route path="profile" element={<ProfilePage />} />
-
+            <Route path="shipping" element={<ShippingPage />} />
             <Route path="products">
               <Route path=":id" element={<ProductPage />} />
             </Route>
+
             <Route path="/" element={<HomePage />} />
           </Routes>
         </Container>
