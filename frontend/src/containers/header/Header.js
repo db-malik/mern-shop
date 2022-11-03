@@ -11,9 +11,9 @@ const Header = () => {
   const dispatch = useDispatch()
 
   const { userInfo } = userLogin
+
   const logoutHandler = () => {
     dispatch(logoutUserAction())
-    redirect('/')
   }
   return (
     <header>
@@ -31,31 +31,19 @@ const Header = () => {
                   <i className="fa-solid fa-cart-shopping"></i> Cart
                 </Nav.Link>
               </LinkContainer>
-
-              {Object.keys(userInfo).length !== 0 ? (
-                <NavDropdown
-                  onClick={() => setOpen(!open)}
-                  aria-controls="collapsedNav"
-                  aria-expanded={open}
-                  title={userInfo.name}
-                  id="username"
-                >
-                  <Collapse in={open}>
-                    <div id="collapsedNav">
-                      <LinkContainer to={'/profile'}>
-                        <NavDropdown.Item> Profile</NavDropdown.Item>
-                      </LinkContainer>
-                      <NavDropdown.Item onClick={logoutHandler}>
-                        {' '}
-                        Logout
-                      </NavDropdown.Item>
-                    </div>
-                  </Collapse>
+              {userInfo ? (
+                <NavDropdown title={userInfo.name} id="username">
+                  <LinkContainer to="/profile">
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fa-solid fa-user"></i> Sign In
+                    <i className="fas fa-user"></i> Sign In
                   </Nav.Link>
                 </LinkContainer>
               )}
