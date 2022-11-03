@@ -17,12 +17,14 @@ const LoginPage = () => {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { loading, error, userInfo } = userLogin
+
   const redirection = location.search ? location.search.split('=')[1] : '/'
+
   useEffect(() => {
-    if (Object.keys(userInfo).length !== 0) {
+    if (userInfo) {
       navigate(redirection)
     }
-  })
+  }, [userInfo, navigate, redirection])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -30,10 +32,12 @@ const LoginPage = () => {
   }
   return (
     <CardContainer>
+      <Title> Login to your account</Title>
+      {error && <Message variant="danger">{error}</Message>}
+
+      {loading && <Loader />}
       <Container>
         <Screen>
-          {error && <Message variant="danger">{error}</Message>}
-          {loading && <Loader />}
           <ScreenContent>
             <LoginForm onSubmit={submitHandler}>
               <LoginField>
@@ -97,7 +101,9 @@ const Container = styled.div`
   justify-content: center;
   min-height: 100vh;
 `
-
+const Title = styled.div`
+  text-align: center;
+`
 const Screen = styled.div`
   background: linear-gradient(90deg, #04619f, #000000);
   position: relative;
