@@ -16,9 +16,9 @@ import logoProfile from '../../assets/img/defaultProfile.png'
 import {
   getUserDetails,
   userUpdateProfileAction,
-} from '../../actions/userActions'
+} from '../../redux/actions/userActions'
 import { useNavigate } from 'react-router-dom'
-import { USER_UPDATE_PROFILE_RESET } from '../../constants/userConstants'
+import { USER_UPDATE_PROFILE_RESET } from '../../redux/constants/userConstants'
 
 const ProfilePage = () => {
   const [name, setName] = useState('')
