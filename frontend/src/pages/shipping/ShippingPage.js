@@ -26,11 +26,11 @@ const ShippingPage = () => {
   const submitHundler = (e) => {
     e.preventDefault()
     dispatch(ShippingAddressAction({ address, city, postalCode, country }))
-    navigate('payment')
+    navigate('/payment')
   }
   return (
     <Container>
-      <CheckoutSteps step1 step2 step3 />
+      <CheckoutSteps step1 step2 />
 
       <FormContainer>
         <h1>Shipping</h1>
@@ -86,7 +86,7 @@ const ShippingPage = () => {
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
   margin: auto;
   width: 60%;
   padding: 40px 20px;

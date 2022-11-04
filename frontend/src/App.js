@@ -9,6 +9,8 @@ import LoginPage from './pages/login/LoginPage'
 import RegisterPage from './pages/register/RegisterPage'
 import ProfilePage from './pages/profile/ProfilePage'
 import ShippingPage from './pages/shipping/ShippingPage'
+import PaymentMethod from './pages/payment/PaymentMethod'
+import PlaceOrder from './pages/placeOrder/PlaceOrder'
 
 const App = () => {
   return (
@@ -20,11 +22,12 @@ const App = () => {
             <Route path="cart" element={<CartPage />}>
               <Route path=":id" element={<CartPage />} />
             </Route>
-
             <Route path="login" element={<LoginPage />}></Route>
             <Route path="register" element={<RegisterPage />} />
             <Route path="profile" element={<ProfilePage />} />
             <Route path="shipping" element={<ShippingPage />} />
+            <Route path="payment" element={<PaymentMethod />} />
+            <Route path="placeorder" element={<PlaceOrder />} />
             <Route path="products">
               <Route path=":id" element={<ProductPage />} />
             </Route>

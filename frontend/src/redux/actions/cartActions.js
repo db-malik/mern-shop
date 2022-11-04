@@ -1,10 +1,10 @@
 import {
   CART_ADD_ITEM,
+  CART_PAYMENT_METHOD,
   CART_REMOVE_ITEM,
   CART_SHIPPING_ADDRESS,
 } from '../constants/cartConstants'
 import axios from 'axios'
-import { Action } from '@remix-run/router'
 
 export const addToCartAction = (id, qty) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`)
@@ -39,5 +39,16 @@ export const ShippingAddressAction = (data) => (dispatch, getState) => {
   localStorage.setItem(
     'shippingAddress',
     JSON.stringify(getState().cart.shippingAddress)
+  )
+}
+
+export const paymentMethodAction = (data) => (dispatch, getState) => {
+  dispatch({
+    type: CART_PAYMENT_METHOD,
+    payload: data,
+  })
+  localStorage.setItem(
+    'paymentMethod',
+    JSON.stringify(getState().cart.paymentMethod)
   )
 }
