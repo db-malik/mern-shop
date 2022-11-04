@@ -151,8 +151,8 @@ export const userUpdateProfileAction = (user) => async (dispatch, getState) => {
 export const logoutUserAction = () => (dispatch) => {
   localStorage.removeItem('userInfo')
   localStorage.removeItem('cartItems')
-  // localStorage.removeItem('shippingAddress')
-  // localStorage.removeItem('paymentMethod')
+  localStorage.removeItem('shippingAddress')
+  localStorage.removeItem('paymentMethod')
   dispatch({ type: USER_LOGOUT })
   document.location.href = '/login'
 }
